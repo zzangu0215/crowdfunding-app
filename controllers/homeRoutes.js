@@ -14,8 +14,20 @@ router.get("/", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/project/:id", (req, res) => {
-  // If user logged they are redirected to homepage
+router.get("/project/:id", withAuth, async (req, res) => {
+  try {
+    const projectData = await Project.findByPk(req.params.id, {
+      include: [{ model: User }],
+    });
+
+    if (!projectData) {
+      res.status(404).json({ message: "No project found with that id!" });
+    }
+
+    res.status(200).json(projectData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 
   res.render("project");
 });
