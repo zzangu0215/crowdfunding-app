@@ -24,6 +24,17 @@ router.get("/", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.get("/project/:id", (req, res) => {
+  // If user logged they are redirected to homepage
+
+  res.render("project");
+});
+
+router.get("/profile", (req, res) => {
+  // If user logged they are redirected to homepage
+
+  res.render("profile");
+});
 
 router.get("/login", (req, res) => {
   // If user logged they are redirected to homepage
